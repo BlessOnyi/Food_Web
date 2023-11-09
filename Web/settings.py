@@ -66,8 +66,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'WebApp.context_processor.categories',
-                'basket.context_processor.basket'
+                'WebApp.context_processors.categories',
+                'basket.context_processors.basket',
             ],
         },
     },
@@ -131,6 +131,9 @@ STATICFILES_DIRS = [
     STATIC_DIR
 ]
 
+
+
+BASKET_SESSION_ID = 'basket'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

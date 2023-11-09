@@ -4,7 +4,113 @@
 {% block content %}
 
 
-<p>baskets
-</p>
+
+<div class="row mb-4 border">
+    <div class="container all mb-5">
+        <main class="pt-5">
+            {% if basket %}
+            {% with product=item.product %}
+            <div data-index="{{product.id}}" class="row g-3">
+                <div class="col-md-5 col-lg-5 order-md-first bg-light">
+
+                    <img class="img-fluid mx-auto d-block" width="200px" alt="Responsive image"
+                        src="{{item.product.image.url }}">
+                </div>
+                <div class="col-md-7 col-lg-7 ps-md-3 ps-lg-5">
+                    <div class="border">
+                        <div class="col border-bottom">
+                            <div class="row p-3">
+                                <div class="col-6">
+                                    <h1>{{ product.title }}</h1>
+
+                                </div>
+                                <div class="col-6 text-end"><span class="h4 fw-bold">&#x20A6;{{ item.total_price
+                                        }}</span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row p-3">
+                                <div class="col-6">
+                                    <label for="select"></label>
+                                    <select id="select">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+
+                                </div>
+                                <div class="col-6 text-end">
+                                    <button type="button" id="add-button" value="{{product.id}}"
+                                        class="btn btn-warning btn-sm">Update</button>
+                                    <button type="button" id="delete-button" data-index="{{product.id}}"
+                                        class="btn btn-warning btn-sm delete-button">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endwith %}
+            {% endif %}
+        </main>
+
+    </div>
+</div>
+<div class="col-12 text-end ">
+    <div class="h6 fw-bold">Total: &#x20A6;<span id="subtotal">{{basket.get_total_price}}</span></div>
+</div>
+
+<script>
+    // Delete Item
+    $(document).on('click', '.delete-button', function (e) {
+        e.preventDefault();
+        var prodid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_delete" %}',
+            data: {
+                productid: $(this).data('index'),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+                $('.product-item[data-index="' + prodid + '"]').remove();
+                document.getElementById("subtotal").innerHTML = json.subtotal;
+                document.getElementById("basket-qty").innerHTML = json.qty
+            },
+            error: function (xhr, errmsg, err) { }
+        });
+    })
+
+    // Update Item
+    $(document).on('click', '.update-button', function (e) {
+        e.preventDefault();
+        var prodid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url "basket:basket_update" %}',
+            data: {
+                productid: $(this).data('index'),
+                productqty: $('#select' + prodid + ' option:selected').text(),
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                action: 'post'
+            },
+            success: function (json) {
+                document.getElementById("basket-qty").innerHTML = json.qty
+                document.getElementById("subtotal").innerHTML = json.subtotal
+            },
+            error: function (xhr, errmsg, err) { }
+        });
+    })
+</script>
 
 {% endblock %}
