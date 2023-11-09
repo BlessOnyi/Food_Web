@@ -131,6 +131,9 @@ STATICFILES_DIRS = [
     STATIC_DIR
 ]
 
+#Basket session ID
+BASKET_SESSION_ID = 'basket'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

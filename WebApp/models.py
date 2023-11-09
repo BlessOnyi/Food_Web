@@ -24,7 +24,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
-class Product(models.Model):
+class Products(models.Model):
     category = models.ForeignKey(Category, related_name='product',on_delete =models.CASCADE)
     created_by =models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_creator')
     title = models.CharField(max_length =200)

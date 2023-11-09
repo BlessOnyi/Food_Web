@@ -7,7 +7,7 @@ from .models import *
 
 
 def myHome(request):
-    products = Product.objects.all()
+    products = Products.objects.all()
     categories = Category.objects.all()
 
     # Check if a category is selected
@@ -15,7 +15,7 @@ def myHome(request):
 
     if selected_category:
         # Filter food items by the selected category
-        products = Product.objects.filter(category__slug=selected_category)
+        products = Products.objects.filter(category__slug=selected_category)
 
     return render (request, 'index.html', {'products':products,'categories':categories})
 
@@ -24,12 +24,12 @@ def myHome(request):
 
 
 def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug, in_stock=True)
+    product = get_object_or_404(Products, slug=slug, in_stock=True)
     return render(request, 'post_detail.html',{'product': product})
 
 def category_list(request, category_slug):
     category = get_object_or_404(Category, slug =category_slug)
-    products = Product.objects.filter(category=category)
+    products = Products.objects.filter(category=category)
     return render (request, 'category.html',{'category':category, 'products':products})
 
 
