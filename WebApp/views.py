@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from .models import *
+from .forms import *
 
 
 # Create your views here.
@@ -7,20 +8,22 @@ from .models import *
 
 
 def myHome(request):
+ 
     products = Products.objects.all()
     categories = Category.objects.all()
 
     # Check if a category is selected
     selected_category = request.GET.get('category')
+    searched = request.POST.get('searched')
 
     if selected_category:
         # Filter food items by the selected category
         products = Products.objects.filter(category__slug=selected_category)
+        return products
+    elif searched:
+        products = Products.objects.filter(title__icontains=searched)
 
     return render (request, 'index.html', {'products':products,'categories':categories})
-
-
-
 
 
 def product_detail(request, slug):

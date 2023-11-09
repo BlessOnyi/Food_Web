@@ -11,7 +11,7 @@ admin.site.register(Category)
 
 
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('title','author','price','slug', 'in_stock', 'created_on', 'updated_on')
+    list_display = ('title','price','slug', 'in_stock', 'created_on', 'updated_on')
     list_filter = ('in_stock', 'is_active')
     list_editable = ('price', 'in_stock')
     prepopulated_fields = {'slug': ('title',)}

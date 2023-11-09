@@ -2,11 +2,12 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .basket import Basket
 from  WebApp.models import Products
-
 from django.http import JsonResponse
 # Create your views here.
+
 def basket_summary(request):
-    return render(request, 'summary.html')
+    basket = Basket(request)
+    return render(request, 'summary.html', {'basket':basket})
 
 
     """
@@ -21,17 +22,15 @@ def basket_add(request):
         product = get_object_or_404(Products, id=product_id)
         basket.add(product=product, qty=product_qty)
 
-        basketqty = basket.__len__()
+        basketqty = basket._len_()
         response = JsonResponse({'qty': basketqty})
         return response
 
+  
+
+
 
 def basket_delete(request):
-    """
-    The `basket_delete` function deletes a product from a basket and returns the updated quantity and
-    subtotal of the basket.
-   
-    """
     basket = Basket(request)
     if request.POST.get('action') == 'post':
         product_id = int(request.POST.get('productid'))

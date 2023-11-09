@@ -7,9 +7,9 @@ from django.urls import reverse
 
 
 
-class ProductManager(models.Manager):
-    def get_queryset(self):
-        return super(ProductManager, self).get_queryset().filter(is_active=True)
+# class ProductManager(models.Manager):
+#     def get_queryset(self):
+#         return super(ProductManager, self).get_queryset().filter(is_active=True)
     
 
 class Category(models.Model):
@@ -28,7 +28,6 @@ class Products(models.Model):
     category = models.ForeignKey(Category, related_name='product',on_delete =models.CASCADE)
     created_by =models.ForeignKey(User, on_delete=models.CASCADE, related_name='product_creator')
     title = models.CharField(max_length =200)
-    author = models.CharField(max_length=200, default='admin')
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
     slug = models.SlugField(max_length=200)
@@ -37,8 +36,7 @@ class Products(models.Model):
     is_active = models.BooleanField(default=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)
-    objects = models.Manager()
-    products = ProductManager()
+    
 
     
     class Meta:

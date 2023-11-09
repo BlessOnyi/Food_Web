@@ -1,8 +1,6 @@
 from django.urls import path
 from . import views
 
-# The code snippet is defining the URL patterns for the 'basket' app in a Django project.
-
 app_name = 'basket'
 urlpatterns = [
     path('', views.basket_summary, name ='basket_summary'),
