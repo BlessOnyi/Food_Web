@@ -22,7 +22,7 @@ def basket_add(request):
         product = get_object_or_404(Products, id=product_id)
         basket.add(product=product, qty=product_qty)
 
-        basketqty = basket._len_()
+        basketqty = basket.__len__()
         response = JsonResponse({'qty': basketqty})
         return response
 

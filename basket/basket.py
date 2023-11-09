@@ -31,7 +31,7 @@ class Basket():
         and return products
         """
         product_ids = self.basket.keys()
-        products = Products.products.filter(id__in=product_ids)
+        products = Products.objects.filter(id__in=product_ids)
         basket = self.basket.copy()
 
         for product in products:
